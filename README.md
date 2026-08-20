@@ -210,6 +210,43 @@ propósito: não se enxerga o degradê, enxerga-se que o fundo tem profundidade.
 
 ---
 
+## Publicação
+
+- **Repositório:** https://github.com/marketing942/Unificados
+- **Vercel:** projeto `unificados` (escopo `marketing942s-projects`)
+
+### `outputDirectory` não é opcional
+
+O `vercel.json` traz `"outputDirectory": "."` e ele **precisa** estar ali. Sem
+essa linha, o preset "Other" do Vercel adota a pasta `public/` como raiz do
+site sempre que ela existe — e como o `index.html` mora na raiz do projeto, o
+primeiro deploy subiu só os assets: `/logo-cppem.png` respondia 200 e a home
+respondia `NOT_FOUND`.
+
+Não dá para explicar isso dentro do arquivo: o `vercel.json` é validado contra
+um schema estrito e rejeita chaves desconhecidas, inclusive uma chave `"//"`
+usada como comentário.
+
+### A URL `*.vercel.app` pede login — é esperado
+
+O Vercel aplica *Standard Protection* às URLs geradas automaticamente, então
+`unificados-*.vercel.app` redireciona para o SSO da conta. **Domínio próprio
+apontado para produção não é protegido**, que é como
+`operacaoalvorada.cppem.com.br` já responde 200 publicamente.
+
+Ou seja: a página só fica aberta ao público quando o domínio final for
+apontado. O `cppem.com.br` **não** está neste escopo do Vercel (só `gm.edu`
+aparece em `vercel domains ls`), então o apontamento precisa ser feito de onde
+o DNS do domínio é gerenciado.
+
+Para conferir o conteúdo publicado sem passar pelo login:
+
+```bash
+vercel curl https://unificados-8m4jji497-marketing942s-projects.vercel.app/
+```
+
+---
+
 ## Testar localmente
 
 O `mask-image` da logo no cabeçalho **não funciona em `file://`** — o Chrome
