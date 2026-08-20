@@ -1285,7 +1285,14 @@ strong, b { font-weight: 700; color: var(--text); }
 }
 .wa-float:active { transform: translateY(0) scale(.98); }
 .wa-float__ico { flex-shrink: 0; width: 44px; display: grid; place-items: center; }
-.wa-float__ico svg { width: 27px; height: 27px; fill: #062B18; }
+/* Branco sobre o verde, como a marca usa — é essa combinação que faz o ícone
+   ser reconhecido em meio segundo. O rótulo ao lado continua escuro porque
+   texto pequeno em branco sobre #25D366 não passa de contraste; num desenho
+   sólido e grande como o glifo, passa. */
+.wa-float__ico svg {
+  width: 26px; height: 26px; fill: #fff;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,.28));
+}
 .wa-float__txt {
   max-width: 0; overflow: hidden; white-space: nowrap;
   font-size: 12.5px; font-weight: 700; letter-spacing: 2.2px;
